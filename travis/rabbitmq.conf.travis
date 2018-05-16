@@ -1,5 +1,5 @@
 listeners.tcp.default = 5672
-listeners.ssl.default = 5671
+listeners.ssl.default = 5673
 num_acceptors.tcp = 10
 num_acceptors.ssl = 10
 reverse_dns_lookups = false
