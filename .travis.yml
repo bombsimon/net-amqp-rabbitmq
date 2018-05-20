@@ -4,12 +4,12 @@ language: perl
 
 perl:
   - "5.20"
-#  - "5.18"
-#  - "5.16"
-#  - "5.14"
-#  - "5.12"
-#  - "5.10"
-#  - "5.8"
+  - "5.18"
+  - "5.16"
+  - "5.14"
+  - "5.12"
+  - "5.10"
+  - "5.8"
 
 os:
   - linux
@@ -37,7 +37,7 @@ env:
     - MQSSLHOST=localhost
     - MQSSLUSERNAME=guest
     - MQSSLPASSWORD=guest
-    - MQSSLCACERT="$TRAVIS_BUILD_DIR/travis/certs/ca_certificate.pem"
+    - MQSSLCACERT="$TRAVIS_BUILD_DIR/travis/certs/testca/cacert.pem"
     - MQSSLVERIFYHOST=0
     - MQSSLVERIFYPEER=0
 
@@ -45,16 +45,10 @@ before_install:
   - $TRAVIS_BUILD_DIR/travis/before_install
 
 install:
-  - if [ ! -d "$HOME/.cache" ]; then mkdir "$HOME/.cache"; fi
-  - if [ -s "$HOME/.cache/$RABBITMQ_TAR" ]; then echo "[INFO] found cached $RABBITMQ_TAR file"; else wget -O "$HOME/.cache/$RABBITMQ_TAR" "$RABBITMQ_DOWNLOAD_URL"; fi
-  - tar -C "$TRAVIS_BUILD_DIR" -xvf "$HOME/.cache/$RABBITMQ_TAR"
-  - sed -e "s#TRAVIS_DIR#$TRAVIS_BUILD_DIR#g" "$TRAVIS_BUILD_DIR/travis/rabbitmq.conf.travis" > "$TRAVIS_BUILD_DIR/travis/rabbitmq.conf"
+  - $TRAVIS_BUILD_DIR/travis/install
 
 before_script:
-  - /bin/sh -c "RABBITMQ_PID_FILE=$TRAVIS_BUILD_DIR/rabbitmq.pid RABBITMQ_CONFIG_FILE=$TRAVIS_BUILD_DIR/travis/rabbitmq $TRAVIS_BUILD_DIR/rabbitmq_server-$RABBITMQ_VERSION/sbin/rabbitmq-server &"
-  - /bin/sh "$TRAVIS_BUILD_DIR/rabbitmq_server-$RABBITMQ_VERSION/sbin/rabbitmqctl" wait "$TRAVIS_BUILD_DIR/rabbitmq.pid"
-  - /bin/sh "$TRAVIS_BUILD_DIR/rabbitmq_server-$RABBITMQ_VERSION/sbin/rabbitmqctl" status
-  - /bin/sh "$TRAVIS_BUILD_DIR/rabbitmq_server-$RABBITMQ_VERSION/sbin/rabbitmq-plugins" enable rabbitmq_management
+  - $TRAVIS_BUILD_DIR/travis/before_script
 
 script:
   - $TRAVIS_BUILD_DIR/travis/script

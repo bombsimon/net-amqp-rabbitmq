@@ -40,7 +40,7 @@ sub new {
         $host = $ENV{MQSSLHOST} if exists $ENV{MQSSLHOST};
         $username = $ENV{MQSSLUSERNAME} if exists $ENV{MQSSLUSERNAME};
         $password = $ENV{MQSSLPASSWORD} if exists $ENV{MQSSLPASSWORD};
-        $port = $ENV{MQSSLPORT} || 5673;
+        $port = $ENV{MQSSLPORT} || 5671;
     }
     else {
         $host = $ENV{MQHOST} if exists $ENV{MQHOST};
