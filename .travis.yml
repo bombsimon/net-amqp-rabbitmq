@@ -13,7 +13,6 @@ perl:
 
 os:
   - linux
-#  - osx
 
 addons:
   apt:
@@ -39,7 +38,6 @@ env:
     - MQSSLPASSWORD=guest
     - MQSSLCACERT="$TRAVIS_BUILD_DIR/travis/certs/testca/cacert.pem"
     - MQSSLVERIFYHOST=0
-    - MQSSLVERIFYPEER=0
 
 before_install:
   - $TRAVIS_BUILD_DIR/travis/before_install
